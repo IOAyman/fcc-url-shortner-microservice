@@ -1,0 +1,17 @@
+{
+  "name": "fcc-url-shortner-microservice",
+  "version": "1.0.0",
+  "description": "A timestamp microservice for the FCC challenge.",
+  "main": "go.js",
+  "repository": "https://github.com/IOAyman/fcc-url-shortner-microservice.git",
+  "author": "Ayman Nedjmeddine <theycallmethedr@gmail.com> (https://twitter.com/IOAyman)",
+  "license": "MIT",
+  "scripts": {
+    "watch": "nodemon go.js",
+    "start": "node go.js"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "nodemon": "^1.11.0"
+  }
+}
