@@ -1,20 +1,30 @@
 const express = require('express')
+const mongoose = require('mongoose')
+const fs = require('fs')
+const routes = require('./routes')
+mongoose.Promise = global.Promise
 
 
-// setup
+// load env
+try {
+  fs.accessSync(`${__dirname}/.env`, fs.constants.R_OK)
+  require('dotenv').config()
+} catch (error) { console.warn(error) }
+
+
+// setup app
 const app = express()
+const { DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_USER_PASS } = process.env
 
 
-// routes
-app.all('/', (req, res) => {
-  res.json({ message: 'not implemented!' })
-})
+// setup db
+mongoose.connect(`mongodb://${DB_USER}:${DB_USER_PASS}@${DB_HOST}:${DB_PORT}/${DB_NAME}`)
+mongoose.connection.on('connected', () => console.info('DB connected!'))
+mongoose.connection.on('error', console.error)
 
-// Woops!
-app.use((req, res, next) => res.end(`
-Hi, you curious (^_^). I'm Ayman Nedjmeddine.
-repo: https://github.com/IOAyman/fcc-url-shortner-microservice.git
-`))
+
+// setup routes
+app.use('/', routes)
 
 
 // go!
